@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ceramics Calculator</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script>
+      function calcClayMass(vesselType, height, thickness, diameter) {
+        let radiusOuter = diameter / 2;
+        let radiusInner = radiusOuter - thickness;
+        const DENSITY = 2.65;
+        const CLAY_LOSS = 1.2;
+
+        switch (vesselType) {
+          case "bowl":
+            let volumeBowl =
+              (2 / 3) *
+              Math.PI *
+              (Math.pow(radiusOuter, 3) - Math.pow(radiusInner, 3));
+            return ((volumeBowl * DENSITY * CLAY_LOSS) / 1000).toFixed(2);
+
+          case "cup":
+            let volumeCup =
+              Math.PI *
+              (height * Math.pow(radiusOuter, 2) -
+                Math.pow(radiusInner, 2) * (height - thickness));
+            let handleHeight = (0.7 * height) / 2;
+            let cupHandle = Math.PI * handleHeight;
+            return (
+              ((volumeCup + cupHandle) * DENSITY * CLAY_LOSS) /
+              1000
+            ).toFixed(2);
+
+          case "vase":
+            let volumeVase =
+              Math.PI * height * Math.pow(radiusOuter, 2) -
+              Math.PI * Math.pow(radiusInner, 2) * (height - thickness);
+            return ((volumeVase * DENSITY * CLAY_LOSS) / 1000).toFixed(2);
+        }
+      }
+
+      function calcGlazeVolume(vesselType, height, thickness, diameter) {
+        let radiusOuter = diameter / 2;
+        let radiusInner = radiusOuter - thickness;
+
+        switch (vesselType) {
+          case "bowl":
+            let surfaceBowl =
+              2 *
+              Math.PI *
+              (Math.pow(radiusOuter, 2) + Math.pow(radiusInner, 2));
+            return surfaceBowl.toFixed(2);
+
+          case "cup":
+            let surfaceCup =
+              2 *
+                Math.PI *
+                (height * radiusOuter + (height - thickness) * radiusInner) +
+              Math.PI * (Math.pow(radiusOuter, 2) + Math.pow(radiusInner, 2));
+            let handleHeight = (0.7 * height) / 2;
+            let cupHandle = 2 * Math.PI * (handleHeight + 1);
+            return (surfaceCup + cupHandle).toFixed(2);
+
+          case "vase":
+            let surfaceVase =
+              2 *
+                Math.PI *
+                (height * radiusOuter + (height - thickness) * radiusInner) +
+              Math.PI * (Math.pow(radiusOuter, 2) + Math.pow(radiusInner, 2));
+            return surfaceVase.toFixed(2);
+        }
+      }
+    </script>
+    <style>
+      .dimensions {
+        display: block;
+      }
+
+      body {
+        width: 100%;
+        margin: 1em auto;
+        text-align: center;
+        font-family: Serif;
+        font-size: 20px;
+      }
+
+      div,
+      label {
+        padding: 10px;
+      }
+
+      h1 {
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body
+    x-data="{clayType:'2.0', vesselType:'bowl', height:'15', thickness:'1', diameter:'10'}"
+  >
+    <h1 class="text-3xl font-bold underline">Ceramics Calculator</h1>
+    <h2>Inputs</h2>
+
+    <div class="clay-type">
+      <label for="type-of-clay"
+        >Choose the type of clay you are working with:
+      </label>
+      <select name="clay" id="type-of-clay" x-model="clayType">
+        <option value="1">Porcelain</option>
+        <option value="2">Stoneware</option>
+        <option value="3">Red Clay</option>
+      </select>
+    </div>
+
+    <div class="vessel-type">
+      <label for="type-of-vessel"
+        >Choose the type of vessel you want to make:
+      </label>
+      <select name="vessel" id="type-of-vessel" x-model="vesselType">
+        <option value="bowl">Bowl</option>
+        <option value="cup">Cup</option>
+        <option value="vase">Vase</option>
+      </select>
+    </div>
+
+    <div class="dimensions">
+      <label class="dimensions" for="height"
+        >Enter the desired height of your vessel (in cm):
+        <input id="height" name="height" type="text" x-model="height"
+      /></label>
+      <label class="dimensions" for="thickness"
+        >Enter the desired thickness of your vessel (in cm):
+        <input id="thickness" name="thickness" type="text" x-model="thickness"
+      /></label>
+      <label class="dimensions" for="diameter"
+        >Enter the desired diameter of the widest point of your vessel (in cm):
+        <input id="diameter" name="diameter" type="text" x-model="diameter"
+      /></label>
+    </div>
+
+    <h2>Results</h2>
+    <div class="mass">
+      <p class="mass">You will require</p>
+      <p
+        x-text="calcClayMass(vesselType, height, thickness, diameter)"
+        class="mass"
+      ></p>
+      <p class="mass">kilograms of clay.</p>
+    </div>
+
+    <div class="glazeVolume">
+      <p>Your piece will take</p>
+      <p
+        x-text="calcGlazeVolume(vesselType, height, thickness, diameter)"
+        class="glazeVolume"
+      ></p>
+      <p class="glazeVolume">ml of glaze to cover the entire piece.</p>
+    </div>
+  </body>
+</html>
