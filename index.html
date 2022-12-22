@@ -89,76 +89,136 @@
         font-size: 20px;
       }
 
-      div,
-      label {
-        padding: 10px;
+      @media (min-width: 992px) {
+        .rotate-lg-6 {
+          transform: rotate(6deg);
+        }
       }
 
-      h1 {
-        padding: 20px;
+      .fancy-border-radius {
+        border-radius: 53% 47% 52% 48% / 36% 41% 59% 64%;
       }
     </style>
   </head>
+
   <body
     x-data="{clayType:'2.0', vesselType:'bowl', height:'15', thickness:'1', diameter:'10'}"
   >
-    <h1 class="text-3xl font-bold underline">Ceramics Calculator</h1>
-    <h2>Inputs</h2>
+    <section class="mb-40">
+      <div class="px-6 py-12 md:px-12 text-gray-800 text-center lg:text-left">
+        <div class="container mx-auto xl:px-32">
+          <div class="grid lg:grid-cols-2 flex items-center">
+            <div class="md:mt-12 lg:mt-0 mb-12 lg:mb-0">
+              <div
+                class="relative block rounded-lg shadow-lg px-6 py-12 md:px-12 lg:-mr-14"
+                style="
+                  background: hsla(0, 0%, 90%, 0.5);
+                  backdrop-filter: blur(30px);
+                "
+              >
+                <h1
+                  class="text-2xl md:text-3xl xl:text-4xl font-bold tracking-tight mb-3"
+                >
+                  Ceramics Calculator <br />
+                </h1>
+                <h2 class="text-2xl font-bold mb-2 display-5">Inputs</h2>
 
-    <div class="clay-type">
-      <label for="type-of-clay"
-        >Choose the type of clay you are working with:
-      </label>
-      <select name="clay" id="type-of-clay" x-model="clayType">
-        <option value="1">Porcelain</option>
-        <option value="2">Stoneware</option>
-        <option value="3">Red Clay</option>
-      </select>
-    </div>
+                <div class="vessel-type">
+                  <label
+                    for="type-of-vessel"
+                    class="text-gray-500 mb-2 pb-2 lg:pb-0"
+                    >Choose the type of vessel you want to make:
+                  </label>
+                  <select
+                    name="vessel"
+                    id="type-of-vessel"
+                    x-model="vesselType"
+                    class="text-gray-500 mb-1 pb-2 lg:pb-0"
+                  >
+                    <option value="bowl">Bowl</option>
+                    <option value="cup">Cup</option>
+                    <option value="vase">Vase</option>
+                  </select>
+                </div>
 
-    <div class="vessel-type">
-      <label for="type-of-vessel"
-        >Choose the type of vessel you want to make:
-      </label>
-      <select name="vessel" id="type-of-vessel" x-model="vesselType">
-        <option value="bowl">Bowl</option>
-        <option value="cup">Cup</option>
-        <option value="vase">Vase</option>
-      </select>
-    </div>
+                <div class="dimensions text-gray-500 mb-2 pb-2 lg:pb-0">
+                  <label class="dimensions" for="height"
+                    >Enter the desired height of your vessel (in cm):
+                    <input
+                      id="height"
+                      name="height"
+                      type="text"
+                      x-model="height"
+                  /></label>
+                  <label class="dimensions" for="thickness"
+                    >Enter the desired thickness of your vessel (in cm):
+                    <input
+                      id="thickness"
+                      name="thickness"
+                      type="text"
+                      x-model="thickness"
+                  /></label>
+                  <label class="dimensions" for="diameter"
+                    >Enter the desired diameter of your vessel (in cm):
+                    <input
+                      id="diameter"
+                      name="diameter"
+                      type="text"
+                      x-model="diameter"
+                  /></label>
+                </div>
 
-    <div class="dimensions">
-      <label class="dimensions" for="height"
-        >Enter the desired height of your vessel (in cm):
-        <input id="height" name="height" type="text" x-model="height"
-      /></label>
-      <label class="dimensions" for="thickness"
-        >Enter the desired thickness of your vessel (in cm):
-        <input id="thickness" name="thickness" type="text" x-model="thickness"
-      /></label>
-      <label class="dimensions" for="diameter"
-        >Enter the desired diameter of the widest point of your vessel (in cm):
-        <input id="diameter" name="diameter" type="text" x-model="diameter"
-      /></label>
-    </div>
-
-    <h2>Results</h2>
-    <div class="mass">
-      <p class="mass">You will require</p>
-      <p
-        x-text="calcClayMass(vesselType, height, thickness, diameter)"
-        class="mass"
-      ></p>
-      <p class="mass">kilograms of clay.</p>
-    </div>
-
-    <div class="glazeVolume">
-      <p>Your piece will take</p>
-      <p
-        x-text="calcGlazeVolume(vesselType, height, thickness, diameter)"
-        class="glazeVolume"
-      ></p>
-      <p class="glazeVolume">ml of glaze to cover the entire piece.</p>
-    </div>
+                <a
+                  class="inline-block px-7 py-3 mb-4 md:mb-0 md:mr-2 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                  data-mdb-ripple="true"
+                  data-mdb-ripple-color="light"
+                  href="#!"
+                  role="button"
+                  >Calculate</a
+                >
+                <a
+                  class="inline-block px-7 py-3 bg-transparent text-blue-600 font-medium text-sm leading-snug uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out"
+                  data-mdb-ripple="true"
+                  data-mdb-ripple-color="light"
+                  href="#!"
+                  role="button"
+                  >Learn more</a
+                >
+                <h2 class="text-2xl font-bold mb-5 display-5">
+                  You will need:
+                </h2>
+                <div class="grid md:grid-cols-2 gap-x-6">
+                  <div class="mb-12 md:mb-0">
+                    <h2
+                      x-text="calcClayMass(vesselType, height, thickness, diameter)"
+                      class="text-3xl font-bold text-dark mb-4"
+                    ></h2>
+                    <h5 class="text-lg font-medium text-gray-500 mb-0">
+                      kilograms of clay
+                    </h5>
+                  </div>
+                  <div class="mb-12 md:mb-0">
+                    <h2
+                      x-text="calcGlazeVolume(vesselType, height, thickness, diameter)"
+                      class="text-3xl font-bold text-dark mb-4"
+                    ></h2>
+                    <h5 class="text-lg font-medium text-gray-500 mb-0">
+                      mililiters of glaze
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="md:mb-12 lg:mb-0">
+              <img
+                src="https://images.squarespace-cdn.com/content/v1/56d31fc0d51cd456e60e2233/1456701007673-9QZC85XZAI5CSJJCELNW/FG07.JPG"
+                class="w-full rounded-lg shadow-lg"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </body>
 </html>
