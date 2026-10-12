@@ -1,13 +1,18 @@
 import React from "react";
+import ProjectCard from "../../components/ProjectCard";
+import { projects, topics } from "../../lib/site";
 
-export default function About(): React.ReactElement {
+export default function Projects(): React.ReactElement {
     return (
-        <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-            <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-                <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-                    This is the projects page.
-                </h1>
-            </main>
+        <div className="flex flex-col gap-8">
+            <h1 className="text-3xl font-semibold">Projects</h1>
+            {/* TODO: make topic filter functional */}
+            <div className="flex gap-4">
+                {topics.map((t) => <button key={t}>{t}</button>)}
+            </div>
+            <div className="grid gap-4 sm:grid-cols-3">
+                {projects.map((p) => <ProjectCard key={p.id} project={p} />)}
+            </div>
         </div>
     );
 }
